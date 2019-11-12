@@ -1,3 +1,51 @@
 FROM ubuntu:16.04
 
-RUN apt-get update && apt-get install -y sudo
+RUN apt-get update && apt-get install -y \
+        sudo \
+        libleveldb-dev \
+        libsnappy-dev \
+        libhdf5-serial-dev \
+        libgflags-dev \
+        libgoogle-glog-dev \
+        liblmdb-dev \
+        build-essential \
+        gfortran \
+        git \
+        vim \
+        pkg-config \
+        ccache \
+        protobuf-compiler \
+        libprotobuf-dev \
+        unzip \
+        curl \
+        cmake \
+        libtool \
+        autoconf \
+        libfcgi-dev \
+        libpng-dev \
+        liblapack-dev \
+        ocl-icd-opencl-dev \
+        libopenblas-dev \
+        libboost-all-dev \
+        gdb \
+        autotools-dev \
+        automake \
+        python-dev \
+        python3-dev \
+        python-pip \
+        python3-pip \
+        python-cffi \
+        python3-cffi \
+        libssl-dev \
+        libatlas-base-dev \
+        python-tk \
+        python-skimage \
+        wget \
+        libtinfo-dev \
+        libedit-dev \
+        libxml2-dev \
+        llvm-5.0
+
+RUN pip3 install --upgrade pip
+RUN pip3 install numpy scipy cython matplotlib protobuf pyyaml easydict gluoncv mxnet decorator
+

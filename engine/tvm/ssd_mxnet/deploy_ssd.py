@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
 
-
 import tvm
 import sys
 from tvm.relay.testing.config import ctx_list
 from tvm.contrib import graph_runtime
 from gluoncv import data
-sys.path.append("../../../utils")
 from timerecorder import TimeRecoder
 
 target_list = ctx_list()
 
 # Load Image
-im_fname = ".tvm/street_small.jpg"
+im_fname = sys.argv[1]
 x, img = data.transforms.presets.ssd.load_test(im_fname, short=512)
 
 # Function of creating TVM runtime and doing inference

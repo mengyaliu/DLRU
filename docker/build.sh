@@ -3,7 +3,7 @@
 #
 # Execute command within a docker container
 #
-# Usage: build.sh <CONTAINER_TYPE> <Version>
+# Usage: build.sh <CONTAINER_TYPE> [Version]
 #
 # CONTAINER_TYPE: Type of the docker container used the run the build: e.g.,
 #                 (cpu | gpu)
@@ -16,6 +16,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONTAINER_TYPE=$( echo "$1" | tr '[:upper:]' '[:lower:]' )
 shift 1
 VERSION=$1
+if [ "$VERSION" = "" ]; then VERSION=latest; fi
 
 # Dockerfile to be used in docker build
 DOCKERFILE_PATH="${SCRIPT_DIR}/Dockerfile.${CONTAINER_TYPE}"
