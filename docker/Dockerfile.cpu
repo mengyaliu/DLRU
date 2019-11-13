@@ -47,5 +47,6 @@ RUN apt-get update && apt-get install -y \
         llvm-5.0
 
 RUN pip3 install --upgrade pip
-RUN pip3 install numpy scipy cython matplotlib protobuf pyyaml easydict gluoncv mxnet decorator
+RUN pip3 install numpy scipy cython matplotlib protobuf \
+                 pyyaml easydict gluoncv mxnet decorator flask flask-restful
 

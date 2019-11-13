@@ -29,12 +29,12 @@ $ git submodule update --init --recursive
 $ ./docker/build.sh cpu
 ```
 
-* Run container
+* Run and enter interactive mode
 ```
 $ ./docker/run.sh dlru/cpu
 ```
 
-* Build tvm and export env variables
+* Build tvm and export env variables(in container environment from now on)
 ```
 $ ./scripts/build_tvm.sh
 $ source ./scripts/env_tvm.sh
@@ -45,17 +45,88 @@ $ source ./scripts/env_tvm.sh
 $ python3 ./engine/tvm/ssd_mxnet/compile_ssd.py
 ```
 
-* Run inference
+* Run restufl service
 ```
-python3 ./engine/tvm/ssd_mxnet/deploy_ssd.py res/street_small.jpg
+python3 services/flask/simple.py
 ```
 
-then following outputs means the script is executed correctly.
+* open another terminal, and test above api
 ```
-Result 0 :  [1.] ; [0.9996178] ; [302.73798 268.0088  480.16583 395.5993 ]
-Result 1 :  [6.] ; [0.99782073] ; [251.63306 225.4926  383.31537 296.9085 ]
-Result 2 :  [14.] ; [0.9835369] ; [354.5448  180.38628 443.87598 384.13733]
-Result 3 :  [14.] ; [0.97117] ; [ 22.508595 216.10155  107.10437  362.7881  ]
-Result 4 :  [14.] ; [0.9478516] ; [180.46783 211.09067 255.36398 332.47226]
-time: <inference>: 586.237549 ms
+curl -v -X POST -H "Content-Type: multipart/form-data" -F "file=@res/street_small.jpg" http://localhost:5000/api/v1/object/ssd
+```
+
+then following outputs means the service in container is correct.
+```
+{
+    "3": {
+        "class": [
+            14.0
+        ],
+        "score": [
+            0.9711700081825256
+        ],
+        "bbox": [
+            22.508594512939453,
+            216.10154724121094,
+            107.1043701171875,
+            362.7880859375
+        ]
+    },
+    "4": {
+        "class": [
+            14.0
+        ],
+        "score": [
+            0.9478515982627869
+        ],
+        "bbox": [
+            180.46783447265625,
+            211.09066772460938,
+            255.36398315429688,
+            332.4722595214844
+        ]
+    },
+    "2": {
+        "class": [
+            14.0
+        ],
+        "score": [
+            0.9835368990898132
+        ],
+        "bbox": [
+            354.5447998046875,
+            180.3862762451172,
+            443.8759765625,
+            384.1373291015625
+        ]
+    },
+    "0": {
+        "class": [
+            1.0
+        ],
+        "score": [
+            0.9996178150177002
+        ],
+        "bbox": [
+            302.73797607421875,
+            268.0087890625,
+            480.16583251953125,
+            395.59930419921875
+        ]
+    },
+    "1": {
+        "class": [
+            6.0
+        ],
+        "score": [
+            0.9978207349777222
+        ],
+        "bbox": [
+            251.633056640625,
+            225.4925994873047,
+            383.31536865234375,
+            296.90850830078125
+        ]
+    }
+}
 ```
