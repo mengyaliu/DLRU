@@ -1,13 +1,19 @@
 # DLRU
 Deep Learning Restful interface Utilities
 
-This project will share some example utilities for people who want to create restful web services providing deep learning algorithm calls.
-For example, an API named "http://localhost:8080/api/v1/face/detect/jpg" can be visited by a POST method with a JPEG file as payload, then JSON format results will be replied.
+This project will share some example utilities for people who want to develop restful web services providing deep learning algorithm APIs.
+For example, an API named "http://localhost:5000/api/v1/object/ssd" can be visited by a POST method with a JPEG file as payload, then JSON format results will be replied.
 
 ## Core Features
 * Cross-platform(X86 & ARM) supported
 * CPU & GPU mode supported
-* C++ & Python supported
+* C++ & Python & Go supported
+
+## Current Status 
+* Complete a basic example of flask + mxnet ssd in python.
+
+## TODO
+* add another example of restful + onnx ssd in C++
 
 ## Get Started
 
@@ -34,7 +40,7 @@ $ ./docker/build.sh cpu
 $ ./docker/run.sh dlru/cpu
 ```
 
-* Build tvm and export env variables(in container environment from now on)
+* Build tvm and export env variables(in container environment now)
 ```
 $ ./scripts/build_tvm.sh
 $ source ./scripts/env_tvm.sh
@@ -45,7 +51,7 @@ $ source ./scripts/env_tvm.sh
 $ python3 ./engine/tvm/ssd_mxnet/compile_ssd.py
 ```
 
-* Run restufl service
+* Run restful service
 ```
 python3 services/flask/simple.py
 ```
