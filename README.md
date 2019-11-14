@@ -25,9 +25,7 @@ Here we give example steps of Ubuntu16.04.
 
 * Fetch source codes
 ```
-$ git clone https://github.com/mengyaliu/DLRU.git
-$ cd DLRU
-$ git submodule update --init --recursive
+$ git clone --recursive https://github.com/mengyaliu/DLRU.git
 ```
 
 * Build docker images
@@ -40,10 +38,10 @@ $ ./docker/build.sh cpu
 $ ./docker/run.sh dlru/cpu
 ```
 
-* Build tvm and export env variables(in container environment now)
+* Build all and export env variables(in container environment now)
 ```
-$ ./scripts/build_tvm.sh
-$ source ./scripts/env_tvm.sh
+$ ./scripts/build.sh
+$ source ./scripts/env.sh
 ```
 
 * Compile mxnet ssd model

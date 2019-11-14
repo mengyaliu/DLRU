@@ -1,3 +1,6 @@
 [submodule "3rdparty/incubator-tvm"]
 	path = 3rdparty/incubator-tvm
 	url = https://github.com/apache/incubator-tvm
+[submodule "3rdparty/pistache"]
+	path = 3rdparty/pistache
+	url = https://github.com/oktal/pistache.git

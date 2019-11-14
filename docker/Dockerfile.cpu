@@ -44,7 +44,8 @@ RUN apt-get update && apt-get install -y \
         libtinfo-dev \
         libedit-dev \
         libxml2-dev \
-        llvm-5.0
+        llvm-5.0 \
+        libcurl4-openssl-dev
 
 RUN pip3 install --upgrade pip
 RUN pip3 install numpy scipy cython matplotlib protobuf \
