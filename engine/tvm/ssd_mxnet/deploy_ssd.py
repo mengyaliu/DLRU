@@ -5,7 +5,7 @@ import sys
 from tvm.relay.testing.config import ctx_list
 from tvm.contrib import graph_runtime
 from gluoncv import data
-from timerecorder import TimeRecoder
+from utils.timerecorder import TimeRecoder
 
 class SSD():
     def __init__(self):

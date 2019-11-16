@@ -17,6 +17,8 @@ function build_tvm()
     cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR ..
     make -j8
     make install
+    cp -a $TVM_HOME/3rdparty/dlpack/include/dlpack/ $INSTALL_DIR/include
+    cp -a $TVM_HOME/3rdparty/dmlc-core/include/dmlc/ $INSTALL_DIR/include
     popd
     popd
 }
@@ -36,13 +38,28 @@ function build_pistache()
         ../
     make -j8
     make install
+    popd
+    popd
+}
+
+function build_dlru()
+{
+    pushd $DLRU_HOME
+    mkdir -p build
+    pushd build
+    cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR ..
+    make VERBOSE=1
+    make install
+    popd
+    popd
 }
 
 function clean()
 {
-  rm -fr $INSTALL_DIR
-  rm -fr $TVM_HOME/build
-  rm -fr $PISTACHE_HOME/build
+    rm -fr $INSTALL_DIR
+    rm -fr $DLRU_HOME/build
+    rm -fr $TVM_HOME/build
+    rm -fr $PISTACHE_HOME/build
 }
 
 if [ "$1" = "clean" ]; then
@@ -50,4 +67,5 @@ if [ "$1" = "clean" ]; then
 else
     build_tvm
     build_pistache
+    build_dlru
 fi

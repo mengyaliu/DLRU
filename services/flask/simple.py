@@ -2,7 +2,7 @@ from flask import Flask
 from flask_restful import Resource, Api, reqparse
 import werkzeug
 import json
-from engine.tvm.ssd_mxnet.deploy_ssd import SSD
+from ssd_mxnet.deploy_ssd import SSD
 
 app = Flask(__name__)
 api = Api(app)

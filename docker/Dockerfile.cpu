@@ -45,6 +45,7 @@ RUN apt-get update && apt-get install -y \
         libedit-dev \
         libxml2-dev \
         llvm-5.0 \
+        libopencv-dev \
         libcurl4-openssl-dev
 
 RUN pip3 install --upgrade pip

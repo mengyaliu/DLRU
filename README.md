@@ -46,12 +46,12 @@ $ source ./scripts/env.sh
 
 * Compile mxnet ssd model
 ```
-$ python3 ./engine/tvm/ssd_mxnet/compile_ssd.py
+$ python3 ./install/ssd_mxnet/compile_ssd.py
 ```
 
 * Run restful service
 ```
-python3 services/flask/simple.py
+python3 ./install/flask/simple.py
 ```
 
 * open another terminal, and test above api
