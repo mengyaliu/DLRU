@@ -38,6 +38,7 @@ function build_pistache()
         ../
     make -j8
     make install
+    cp -a ../third-party/rapidjson/include/rapidjson $INSTALL_DIR/include
     popd
     popd
 }

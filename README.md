@@ -56,7 +56,7 @@ python3 ./install/flask/simple.py
 
 * open another terminal, and test above api
 ```
-curl -v -X POST -H "Content-Type: multipart/form-data" -F "file=@res/street_small.jpg" http://localhost:5000/api/v1/object/ssd
+curl -X POST -F "file=@res/street_small.jpg" http://localhost:5000/api/v1/object/ssd
 ```
 
 then following outputs means the service in container is correct.

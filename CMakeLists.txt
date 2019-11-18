@@ -25,13 +25,12 @@ macro(use_cxx11)
   endif()
 endmacro(use_cxx11)
 
-set(CMAKE_CXX_FLAGS_DEBUG "-Wall -O0 -g")
-set(CMAKE_CXX_FLAGS_RELEASE "-Wall -O2")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -O2")
 
 use_cxx11()
 
+add_subdirectory(utils)
 add_subdirectory(engine)
 add_subdirectory(services)
-add_subdirectory(utils)
 
 
