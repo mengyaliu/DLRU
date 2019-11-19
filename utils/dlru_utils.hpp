@@ -7,7 +7,7 @@
 namespace DLRU {
 
 void DumpDataToFile(const std::string &name, char *data, int size);
-void DumpDataToFile(const std::string &file_name, const std::string &data);
+void DumpDataToFile(const std::string &name, const std::string &data);
 void DumpDataToFile(const std::string &name, DLTensor *data);
 
 }

@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#define DMLC_USE_GLOG 1
 #include <dlpack/dlpack.h>
 #include <opencv2/opencv.hpp>
 #include <tvm/runtime/module.h>

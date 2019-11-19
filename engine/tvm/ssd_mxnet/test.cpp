@@ -19,6 +19,8 @@ int main(int argc, char *argv[]) {
     return -1;
   }
 
+  google::InitGoogleLogging(argv[0]);
+
   string lib = ".tvm/deploy_lib.tar.so";
   string graph = ".tvm/deploy_graph.json";
   string params = ".tvm/deploy_param.params";

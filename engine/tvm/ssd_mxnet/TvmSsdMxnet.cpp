@@ -1,13 +1,14 @@
 #include <sstream>
 #include <fstream>
+
+#include "TvmSsdMxnet.hpp"
+#include "dlru_utils.hpp"
+
 #include <tvm/runtime/module.h>
 #include <tvm/runtime/registry.h>
 #include <tvm/runtime/packed_func.h>
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
-
-#include "TvmSsdMxnet.hpp"
-#include "dlru_utils.hpp"
 
 #define THRESH 0.9
 
@@ -64,6 +65,8 @@ void TvmSsdMxnet::Init(const string &lib, const string &graph, const string &par
   int in_ndim = 4;
   int64_t in_shape[4] = {1, 3, 512, 512};
   TVMArrayAlloc(in_shape, in_ndim, dtype_code, dtype_bits, dtype_lanes, device_type, device_id, &input_);
+
+  LOG(INFO) << "DLRU tvm runtime initialized with module file: " << lib;
 }
 
 TvmSsdMxnet::TvmSsdMxnet() { }

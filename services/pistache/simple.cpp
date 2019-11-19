@@ -46,8 +46,8 @@ private:
 
   void handleSSD(const Rest::Request& request, Http::ResponseWriter response) {
     string jpg_image = DLRU::Base64Decode(request.body());
-    DLRU::DumpDataToFile(".tvm/baset.bin", request.body());
-    DLRU::DumpDataToFile(".tvm/jpg.bin", jpg_image);
+    // DLRU::DumpDataToFile(".tvm/baset.bin", request.body());
+    // DLRU::DumpDataToFile(".tvm/jpg.bin", jpg_image);
     runtime_.PreProcess(jpg_image);
     runtime_.Predict();
     vector<float> class_results, score_results;
@@ -94,6 +94,8 @@ int main(int argc, char *argv[]) {
     if (argc == 3)
       thr = std::stol(argv[2]);
   }
+
+  google::InitGoogleLogging(argv[0]);
 
   Address addr(Ipv4::any(), port);
 
