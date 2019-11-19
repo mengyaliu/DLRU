@@ -4,8 +4,12 @@
 #include <string>
 #include <dlpack/dlpack.h>
 
+namespace DLRU {
+
 void DumpDataToFile(const std::string &name, char *data, int size);
 void DumpDataToFile(const std::string &file_name, const std::string &data);
 void DumpDataToFile(const std::string &name, DLTensor *data);
+
+}
 
 #endif // __DLRU_UTILS_HPP__

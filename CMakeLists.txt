@@ -18,7 +18,6 @@ macro(use_cxx14)
   set(CMAKE_CXX_EXTENSIONS OFF)
 endmacro(use_cxx14)
 
-
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -O2")
 
 use_cxx14()

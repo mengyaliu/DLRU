@@ -69,4 +69,5 @@ else
     build_tvm
     build_pistache
     build_dlru
+    cp -a $DLRU_HOME/res $INSTALL_DIR
 fi

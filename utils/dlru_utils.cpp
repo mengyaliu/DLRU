@@ -5,6 +5,8 @@
 
 #include "dlru_utils.hpp"
 
+namespace DLRU {
+
 void DumpDataToFile(const std::string &name, char *data, int size) {
   std::fstream fp(name, std::ios::out | std::ios::binary);
   fp.write(data, size);
@@ -25,3 +27,4 @@ void DumpDataToFile(const std::string &name, DLTensor *data) {
   DumpDataToFile(name, bytes);
 }
 
+}

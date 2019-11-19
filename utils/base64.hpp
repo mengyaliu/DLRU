@@ -206,9 +206,11 @@ decode(void* dest, char const* src, std::size_t len)
 
 } // base64
 
+namespace DLRU {
+
 template<class = void>
 std::string
-base64_encode (std::uint8_t const* data,
+Base64Encode(std::uint8_t const* data,
     std::size_t len)
 {
     std::string dest;
@@ -219,15 +221,15 @@ base64_encode (std::uint8_t const* data,
 
 inline
 std::string
-base64_encode(std::string const& s)
+Base64Encode(std::string const& s)
 {
-    return base64_encode (reinterpret_cast <
+    return Base64Encode(reinterpret_cast <
         std::uint8_t const*> (s.data()), s.size());
 }
 
 template<class = void>
 std::string
-base64_decode(std::string const& data)
+Base64Decode(std::string const& data)
 {
     std::string dest;
     dest.resize(base64::decoded_size(data.size()));
@@ -235,4 +237,6 @@ base64_decode(std::string const& data)
         &dest[0], data.data(), data.size());
     dest.resize(result.first);
     return dest;
+}
+
 }

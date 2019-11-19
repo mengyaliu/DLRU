@@ -1,0 +1,8 @@
+.bash_history
+.cache/
+.mxnet/
+.sudo_as_admin_successful
+.tvm/
+.viminfo
+build/
+install/

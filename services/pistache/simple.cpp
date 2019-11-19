@@ -45,9 +45,9 @@ private:
   }
 
   void handleSSD(const Rest::Request& request, Http::ResponseWriter response) {
-    string jpg_image = base64_decode(request.body());
-    // DumpDataToFile(".tvm/baset.bin", request.body());
-    // DumpDataToFile(".tvm/jpg.bin", jpg_image);
+    string jpg_image = DLRU::Base64Decode(request.body());
+    DLRU::DumpDataToFile(".tvm/baset.bin", request.body());
+    DLRU::DumpDataToFile(".tvm/jpg.bin", jpg_image);
     runtime_.PreProcess(jpg_image);
     runtime_.Predict();
     vector<float> class_results, score_results;
