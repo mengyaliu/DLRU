@@ -9,3 +9,4 @@ add_library(dlru_utils STATIC ${SRC})
 target_link_libraries(dlru_utils tvm_runtime)
 
 install(FILES timerecorder.py DESTINATION utils)
+install(FILES base64.hpp DESTINATION include)

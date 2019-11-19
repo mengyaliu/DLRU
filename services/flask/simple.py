@@ -20,7 +20,7 @@ class BasicTest(Resource):
         results = ssd.run(".tvm/tmp.jpg")
         return results
 
-api.add_resource(BasicTest, '/api/v1/object/ssd')
+api.add_resource(BasicTest, '/api/v1/object/ssd/jpg')
 
 if __name__ == '__main__':
     app.run(debug=True)

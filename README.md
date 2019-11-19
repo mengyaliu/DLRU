@@ -10,12 +10,15 @@ For example, an API named "http://localhost:5000/api/v1/object/ssd" can be visit
 * C++ & Python & Go supported
 
 ## Current Status 
-* Complete a basic example of flask + mxnet ssd in python.
+* Complete an example of flask + cpu tvm mxnet ssd in python.
+* Complete an example of pistach + cpu tvm mxnet ssd in c++.
 
 ## TODO
-* add another example of restful + onnx ssd in C++
+* add GPU tvm support
 
 ## Get Started
+
+### Setup environment and build
 
 * Basic requirement
 
@@ -48,15 +51,33 @@ $ source ./scripts/env.sh
 ```
 $ python3 ./install/ssd_mxnet/compile_ssd.py
 ```
+### Test pistache c++ restful service
 
-* Run restful service
+* Start service
+```
+./install/bin/simple_pistache
+```
+
+* open another terminal, and test above api
+```
+curl -d "@res/street_small_base64.txt"  http://localhost:8000/api/v1/object/ssd/base64
+```
+
+then following outputs means the service in container is correct.
+```
+{"0":{"score":0.999661922454834,"class":1.0,"bbox":[302.7614440917969,267.5565185546875,479.8902282714844,395.59326171875]},"1":{"score":0.9974727034568787,"class":6.0,"bbox":[252.70074462890626,224.68527221679688,380.7926025390625,296.6217346191406]},"2":{"score":0.9877620935440064,"class":14.0,"bbox":[355.84759521484377,180.6073455810547,443.7603759765625,384.37005615234377]},"3":{"score":0.9850497841835022,"class":14.0,"bbox":[178.17184448242188,206.58700561523438,259.6250915527344,330.6838684082031]},"4":{"score":0.9553403854370117,"class":14.0,"bbox":[23.591705322265626,218.72982788085938,103.66038513183594,361.9799499511719]}}
+```
+
+### Test flask python3 restful service
+
+* Start service
 ```
 python3 ./install/flask/simple.py
 ```
 
 * open another terminal, and test above api
 ```
-curl -X POST -F "file=@res/street_small.jpg" http://localhost:5000/api/v1/object/ssd
+curl -X POST -F "file=@res/street_small.jpg" http://localhost:5000/api/v1/object/ssd/jpg
 ```
 
 then following outputs means the service in container is correct.

@@ -4,7 +4,6 @@ include_directories("${CMAKE_INSTALL_PREFIX}/include")
 include_directories("${CMAKE_SOURCE_DIR}/utils")
 link_directories("${CMAKE_INSTALL_PREFIX}/lib")
 link_directories("${CMAKE_BUILD_DIR}/utils")
-link_directories("${CMAKE_BUILD_DIR}/engine/tvm/ssd_mxnet")
 
 set(OPENCV_LIBS opencv_core opencv_highgui opencv_imgproc)
 
@@ -19,3 +18,4 @@ install(TARGETS test_tvm_ssd_mxnet DESTINATION bin)
 install(TARGETS dlru DESTINATION lib)
 install(FILES tvm/ssd_mxnet/compile_ssd.py DESTINATION ssd_mxnet)
 install(FILES tvm/ssd_mxnet/deploy_ssd.py DESTINATION ssd_mxnet)
+install(FILES tvm/ssd_mxnet/TvmSsdMxnet.hpp DESTINATION include)

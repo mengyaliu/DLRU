@@ -11,21 +11,26 @@ namespace DLRU {
 
 class TvmSsdMxnet {
  public:
+  TvmSsdMxnet();
+  TvmSsdMxnet(const std::string &lib,
+              const std::string &graph,
+              const std::string &params);
+  void Init(const std::string &lib,
+            const std::string &graph,
+            const std::string &params);
+  ~TvmSsdMxnet();
+  void PreProcess(cv::Mat &image);
+  void PreProcess(std::string &jpg_image);
+  void Predict();
+  void PostProcess(std::vector<float>              &class_results,
+                   std::vector<float>              &score_results,
+                   std::vector<std::vector<float>> &bbox_results);
+ private:
   float thresh_;
   std::vector<float> mean_;
   std::vector<float> std_;
   DLTensor *input_;
   tvm::runtime::Module mod_;
-
-  TvmSsdMxnet(const std::string &lib,
-              const std::string &graph,
-              const std::string &params);
-  ~TvmSsdMxnet();
-  void PreProcess(cv::Mat &image);
-  void Predict();
-  void PostProcess(std::vector<float>              &class_results,
-                   std::vector<float>              &score_results,
-                   std::vector<std::vector<float>> &bbox_results);
 };
 
 }

@@ -20,7 +20,7 @@ const static float g_std[3] = {0.229, 0.224, 0.225};
 
 namespace DLRU {
 
-TvmSsdMxnet::TvmSsdMxnet(const string &lib, const string &graph, const string &params) {
+void TvmSsdMxnet::Init(const string &lib, const string &graph, const string &params) {
 
   // init configurations
   thresh_ = THRESH;
@@ -66,6 +66,12 @@ TvmSsdMxnet::TvmSsdMxnet(const string &lib, const string &graph, const string &p
   TVMArrayAlloc(in_shape, in_ndim, dtype_code, dtype_bits, dtype_lanes, device_type, device_id, &input_);
 }
 
+TvmSsdMxnet::TvmSsdMxnet() { }
+
+TvmSsdMxnet::TvmSsdMxnet(const string &lib, const string &graph, const string &params) {
+  Init(lib, graph, params);
+}
+
 TvmSsdMxnet::~TvmSsdMxnet() {
 
 }
@@ -93,6 +99,12 @@ void TvmSsdMxnet::PreProcess(cv::Mat &image) {
   split_dst[0].convertTo(split_dst[0], CV_32FC1, 1.0 / (255 * g_std[0]), -1.0 * g_mean[0] / g_std[0]);
   split_dst[1].convertTo(split_dst[1], CV_32FC1, 1.0 / (255 * g_std[1]), -1.0 * g_mean[1] / g_std[1]);
   split_dst[2].convertTo(split_dst[2], CV_32FC1, 1.0 / (255 * g_std[2]), -1.0 * g_mean[2] / g_std[2]);
+}
+
+void TvmSsdMxnet::PreProcess(string &jpg_image)  {
+  vector<uchar> data(jpg_image.begin(), jpg_image.end());
+  cv::Mat image = cv::imdecode(data, CV_LOAD_IMAGE_COLOR);
+  PreProcess(image);
 }
 
 void TvmSsdMxnet::Predict() {
