@@ -14,21 +14,22 @@ using std::vector;
 
 int main(int argc, char *argv[]) {
 
-  if (argc < 2) {
-    cout << "Usage: ./test pic" << endl;
+  if (argc < 3) {
+    cout << "Usage: ./test model_dir pic" << endl;
     return -1;
   }
 
   google::InitGoogleLogging(argv[0]);
 
-  string lib = ".tvm/deploy_lib.tar.so";
-  string graph = ".tvm/deploy_graph.json";
-  string params = ".tvm/deploy_param.params";
+  string model_dir(argv[1]);
+  string lib = model_dir + "deploy_lib.tar.so";
+  string graph = model_dir + "deploy_graph.json";
+  string params = model_dir + "deploy_param.params";
 
   // init tvm engine
   DLRU::TvmSsdMxnet engine(lib, graph, params);
 
-  cv::Mat image = cv::imread(argv[1]);
+  cv::Mat image = cv::imread(argv[2]);
 
   // preprocess image
   engine.PreProcess(image);

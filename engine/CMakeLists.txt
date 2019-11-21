@@ -19,3 +19,12 @@ install(TARGETS dlru DESTINATION lib)
 install(FILES tvm/ssd_mxnet/compile_ssd.py DESTINATION ssd_mxnet)
 install(FILES tvm/ssd_mxnet/deploy_ssd.py DESTINATION ssd_mxnet)
 install(FILES tvm/ssd_mxnet/TvmSsdMxnet.hpp DESTINATION include)
+
+set(RES_DIR ${CMAKE_SOURCE_DIR}/res)
+set(TMP_DIR ${CMAKE_SOURCE_DIR}/.model/)
+set(ENGINE_TVM_HOME ${CMAKE_SOURCE_DIR}/engine/tvm)
+
+include(CTest)
+add_test(test_ssd_mxnet_compile python3 ${ENGINE_TVM_HOME}/ssd_mxnet/compile_ssd.py ${TMP_DIR})
+add_test(test_ssd_mxnet_deploy_py python3 ${ENGINE_TVM_HOME}/ssd_mxnet/deploy_ssd.py ${TMP_DIR} ${RES_DIR}/street_small.jpg)
+add_test(test_ssd_mxnet_deploy_cpp test_tvm_ssd_mxnet ${TMP_DIR} ${RES_DIR}/street_small.jpg)

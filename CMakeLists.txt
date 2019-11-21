@@ -22,6 +22,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -O2")
 
 use_cxx14()
 
+enable_testing()
+
 add_subdirectory(utils)
 add_subdirectory(engine)
 add_subdirectory(services)

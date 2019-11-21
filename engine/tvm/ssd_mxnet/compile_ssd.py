@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import tvm
-
+import sys, os
 from tvm.relay.testing.config import ctx_list
 from tvm import relay
 from gluoncv import model_zoo, data, utils
@@ -19,7 +19,8 @@ supported_model = [
 
 model_name = supported_model[0]
 dshape = (1, 3, 512, 512)
-target_list = ctx_list()
+target = 'llvm'
+ctx = tvm.cpu(0)
 
 # download model
 block = model_zoo.get_model(model_name, pretrained=True)
@@ -32,11 +33,15 @@ def build(target):
     return graph, lib, params
 
 # compile model and save them to files
-for target, ctx in target_list:
-    graph, lib, params = build(target)
-    path_lib = ".tvm/deploy_lib.tar"
-    lib.export_library(path_lib)
-    with open(".tvm/deploy_graph.json", "w") as fo:
-        fo.write(graph)
-    with open(".tvm/deploy_param.params", "wb") as fo:
-        fo.write(relay.save_param_dict(params))
+graph, lib, params = build(target)
+tmp_dir = sys.argv[1]
+if not os.path.exists(tmp_dir):
+    os.makedirs(tmp_dir)
+path_lib = tmp_dir + "deploy_lib.tar"
+path_graph = tmp_dir + "deploy_graph.json"
+path_params = tmp_dir + "deploy_param.params"
+lib.export_library(path_lib)
+with open(path_graph, "w") as fo:
+    fo.write(graph)
+with open(path_params, "wb") as fo:
+    fo.write(relay.save_param_dict(params))

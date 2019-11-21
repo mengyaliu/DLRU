@@ -1,5 +1,7 @@
 .bash_history
 .cache/
+.tmp/
+.model/
 .mxnet/
 .sudo_as_admin_successful
 .tvm/

@@ -43,19 +43,20 @@ $ ./docker/run.sh dlru/cpu
 
 * Build all and export env variables(in container environment now)
 ```
-$ ./scripts/build.sh
 $ source ./scripts/env.sh
+$ ./scripts/build.sh
+$ ./scripts/build.sh test
 ```
 
 * Compile mxnet ssd model
 ```
-$ python3 ./install/ssd_mxnet/compile_ssd.py
+$ python3 ./install/ssd_mxnet/compile_ssd.py .model/
 ```
 ### Test pistache c++ restful service
 
 * Start service
 ```
-./install/bin/simple_pistache
+./install/bin/simple_pistache .model/
 ```
 
 * open another terminal, and test above api
@@ -72,7 +73,7 @@ then following outputs means the service in container is correct.
 
 * Start service
 ```
-python3 ./install/flask/simple.py
+python3 ./install/flask/simple.py .model/
 ```
 
 * open another terminal, and test above api

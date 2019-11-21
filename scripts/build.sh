@@ -55,6 +55,13 @@ function build_dlru()
     popd
 }
 
+function test_dlru()
+{
+    pushd $DLRU_HOME/build
+    ctest -V --timeout 100
+    popd
+}
+
 function clean()
 {
     rm -fr $INSTALL_DIR
@@ -65,6 +72,8 @@ function clean()
 
 if [ "$1" = "clean" ]; then
     clean
+elif [ "$1" = "test" ]; then
+    test_dlru
 else
     build_tvm
     build_pistache
