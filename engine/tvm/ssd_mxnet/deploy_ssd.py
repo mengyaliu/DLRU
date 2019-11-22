@@ -8,15 +8,20 @@ from gluoncv import data
 from utils.timerecorder import TimeRecoder
 
 class SSD():
-    def __init__(self, model_dir):
+    def __init__(self, mode, model_dir):
         # Load compiled lib and params from file
         loaded_json = open(model_dir + "deploy_graph.json").read()
         loaded_lib = tvm.module.load(model_dir + "deploy_lib.tar")
         loaded_params = bytearray(open(model_dir + "deploy_param.params", "rb").read())
 
-        # Init runtime
-        self.target = 'llvm'
-        self.ctx = tvm.cpu(0)
+        # Init target mode
+        if mode == 'cpu':
+            self.target = 'llvm'
+            self.ctx = tvm.cpu(0)
+        else:
+            self.target = 'cuda'
+            self.ctx = tvm.gpu(0)
+
         self.runtime = graph_runtime.create(loaded_json, loaded_lib, self.ctx)
         self.runtime.load_params(loaded_params)
 
@@ -50,6 +55,6 @@ class SSD():
         return results
 
 if __name__ == '__main__':
-    ssd = SSD(sys.argv[1])
-    results = ssd.run(sys.argv[2])
+    ssd = SSD(sys.argv[1], sys.argv[2])
+    results = ssd.run(sys.argv[3])
     print(results)

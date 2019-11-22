@@ -12,7 +12,11 @@ function build_tvm()
 {
     pushd $TVM_HOME
     mkdir -p build
-    cat cmake/config.cmake | sed -e 's/USE_LLVM OFF/USE_LLVM \/usr\/lib\/llvm-5.0\/bin\/llvm-config/g' > build/config.cmake
+    if [ "$1" = "gpu" ] || [ "$1" = "GPU" ]; then
+        cat cmake/config.cmake | sed -e 's/USE_LLVM OFF/USE_LLVM \/usr\/lib\/llvm-5.0\/bin\/llvm-config/g' -e 's/USE_CUDA OFF/USE_CUDA ON/g' > build/config.cmake
+    else
+        cat cmake/config.cmake | sed -e 's/USE_LLVM OFF/USE_LLVM \/usr\/lib\/llvm-5.0\/bin\/llvm-config/g' > build/config.cmake
+    fi
     pushd build
     cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR ..
     make -j8
@@ -58,7 +62,11 @@ function build_dlru()
 function test_dlru()
 {
     pushd $DLRU_HOME/build
-    ctest -V --timeout 100
+    if [ "$1" != "" ]; then
+        ctest -V --timeout 100 -R $1
+    else
+        ctest -V --timeout 100
+    fi
     popd
 }
 
@@ -73,9 +81,9 @@ function clean()
 if [ "$1" = "clean" ]; then
     clean
 elif [ "$1" = "test" ]; then
-    test_dlru
+    test_dlru $2
 else
-    build_tvm
+    build_tvm $1
     build_pistache
     build_dlru
     cp -a $DLRU_HOME/res $INSTALL_DIR

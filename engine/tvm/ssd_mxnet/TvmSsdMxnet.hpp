@@ -13,10 +13,12 @@ namespace DLRU {
 class TvmSsdMxnet {
  public:
   TvmSsdMxnet();
-  TvmSsdMxnet(const std::string &lib,
+  TvmSsdMxnet(const std::string &mode,
+              const std::string &lib,
               const std::string &graph,
               const std::string &params);
-  void Init(const std::string &lib,
+  void Init(const std::string &mode,
+            const std::string &lib,
             const std::string &graph,
             const std::string &params);
   ~TvmSsdMxnet();

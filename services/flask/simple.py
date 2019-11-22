@@ -5,10 +5,11 @@ import json
 import sys
 from ssd_mxnet.deploy_ssd import SSD
 
-tmp_dir = sys.argv[1]
+mode = sys.argv[1]
+tmp_dir = sys.argv[2]
 app = Flask(__name__)
 api = Api(app)
-ssd = SSD(tmp_dir)
+ssd = SSD(mode, tmp_dir)
 
 class BasicTest(Resource):
     def get(self):

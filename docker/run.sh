@@ -15,6 +15,7 @@ if [ "$#" -lt 1 ]; then
     exit -1
 fi
 
+CONTAINER_TYPE=cpu
 DOCKER_IMAGE_NAME=("$1")
 
 if [ "$#" -eq 1 ]; then
@@ -42,6 +43,7 @@ else
 fi
 
 if [[ "${DOCKER_IMAGE_NAME}" == *"gpu"* ]]; then
+    CONTAINER_TYPE=gpu
     if ! type "nvidia-docker" 1> /dev/null 2> /dev/null
     then
         DOCKER_BINARY="docker"
@@ -56,6 +58,7 @@ fi
 # Print arguments.
 echo "WORKSPACE: ${WORKSPACE}"
 echo "DOCKER CONTAINER NAME: ${DOCKER_IMAGE_NAME}"
+echo "DOCKER CONTAINER TYPE: ${CONTAINER_TYPE}"
 echo ""
 
 echo "Running '${COMMAND[@]}' inside ${DOCKER_IMAGE_NAME}..."

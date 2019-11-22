@@ -18,7 +18,7 @@ public:
   DLEndpoint(Address addr) : httpEndpoint(std::make_shared<Http::Endpoint>(addr))
   { }
 
-  void init(string model_dir, size_t thr = 2) {
+  void init(string mode, string model_dir, size_t thr = 2) {
     auto opts = Http::Endpoint::options()
                   .threads(thr)
                   .maxRequestSize(1024 * 1024 * 20);
@@ -30,7 +30,7 @@ public:
     string params = model_dir + "deploy_param.params";
 
     // init tvm runtime
-    runtime_.Init(lib, graph, params);
+    runtime_.Init(mode, lib, graph, params);
   }
 
   void start() {
@@ -89,16 +89,17 @@ int main(int argc, char *argv[]) {
   int thr = 4;
   Port port(8000);
 
-  if (argc < 2) {
-    cout << "Usage: " << argv[0] << " <model_dir> [port] [thread_num]";
+  if (argc < 3) {
+    cout << "Usage: " << argv[0] << " <mode> <model_dir> [port] [thread_num]";
     exit(0);
   }
 
-  string model_dir(argv[1]);
-  if (argc >= 3) {
-    port = std::stol(argv[2]);
-    if (argc == 4)
-      thr = std::stol(argv[3]);
+  string mode(argv[1]);
+  string model_dir(argv[2]);
+  if (argc >= 4) {
+    port = std::stol(argv[3]);
+    if (argc == 5)
+      thr = std::stol(argv[4]);
   }
 
   google::InitGoogleLogging(argv[0]);
@@ -110,6 +111,6 @@ int main(int argc, char *argv[]) {
 
   DLEndpoint engine(addr);
 
-  engine.init(model_dir, thr);
+  engine.init(mode, model_dir, thr);
   engine.start();
 }

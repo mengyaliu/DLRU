@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM nvidia/cuda:latest
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -55,3 +55,4 @@ RUN apt-get update && apt-get install -y \
 RUN pip3 install --upgrade pip
 RUN pip3 install numpy scipy cython matplotlib protobuf \
                  pyyaml easydict gluoncv mxnet decorator flask flask-restful
+

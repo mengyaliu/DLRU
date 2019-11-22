@@ -1,4 +1,5 @@
 .bash_history
+.nv/
 .cache/
 .tmp/
 .model/

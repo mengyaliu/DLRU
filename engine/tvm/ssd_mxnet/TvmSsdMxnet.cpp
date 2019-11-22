@@ -21,7 +21,10 @@ const static float g_std[3] = {0.229, 0.224, 0.225};
 
 namespace DLRU {
 
-void TvmSsdMxnet::Init(const string &lib, const string &graph, const string &params) {
+void TvmSsdMxnet::Init(const string &mode,
+                       const string &lib,
+                       const string &graph,
+                       const string &params) {
 
   // init configurations
   thresh_ = THRESH;
@@ -50,7 +53,8 @@ void TvmSsdMxnet::Init(const string &lib, const string &graph, const string &par
 
   // create runtime
   int device_id = 0;
-  int device_type = kDLCPU;
+  int device_type = (!mode.compare(0, 3, "gpu") || !mode.compare(0, 3, "GPU")) ? kDLGPU : kDLCPU;
+  LOG(INFO) << "runtime mode: " << mode << ", " << device_type;
   mod_ = (*tvm::runtime::Registry::Get("tvm.graph_runtime.create"))
                                 (json_data, mod_dylib, device_type, device_id);
 
@@ -71,8 +75,11 @@ void TvmSsdMxnet::Init(const string &lib, const string &graph, const string &par
 
 TvmSsdMxnet::TvmSsdMxnet() { }
 
-TvmSsdMxnet::TvmSsdMxnet(const string &lib, const string &graph, const string &params) {
-  Init(lib, graph, params);
+TvmSsdMxnet::TvmSsdMxnet(const string &mode,
+                         const string &lib,
+                         const string &graph,
+                         const string &params) {
+  Init(mode, lib, graph, params);
 }
 
 TvmSsdMxnet::~TvmSsdMxnet() {

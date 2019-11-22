@@ -19,8 +19,13 @@ supported_model = [
 
 model_name = supported_model[0]
 dshape = (1, 3, 512, 512)
-target = 'llvm'
-ctx = tvm.cpu(0)
+
+if sys.argv[1] == 'cpu':
+    target = 'llvm'
+    ctx = tvm.cpu(0)
+else:
+    target = 'cuda'
+    ctx = tvm.gpu(0)
 
 # download model
 block = model_zoo.get_model(model_name, pretrained=True)
@@ -34,7 +39,7 @@ def build(target):
 
 # compile model and save them to files
 graph, lib, params = build(target)
-tmp_dir = sys.argv[1]
+tmp_dir = sys.argv[2]
 if not os.path.exists(tmp_dir):
     os.makedirs(tmp_dir)
 path_lib = tmp_dir + "deploy_lib.tar"

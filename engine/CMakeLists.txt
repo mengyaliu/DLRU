@@ -4,7 +4,8 @@ include_directories("${CMAKE_SOURCE_DIR}/utils")
 include_directories("${CMAKE_INSTALL_PREFIX}/include")
 link_directories("${CMAKE_INSTALL_PREFIX}/lib")
 
-set(OPENCV_LIBS opencv_core opencv_highgui opencv_imgproc)
+# set(OPENCV_LIBS opencv_core opencv_highgui opencv_imgproc)
+set(OPENCV_LIBS opencv_core opencv_imgcodecs opencv_highgui opencv_imgproc)
 
 set(SRC tvm/ssd_mxnet/TvmSsdMxnet.cpp)
 
@@ -25,6 +26,6 @@ set(TMP_DIR ${CMAKE_SOURCE_DIR}/.model/)
 set(ENGINE_TVM_HOME ${CMAKE_SOURCE_DIR}/engine/tvm)
 
 include(CTest)
-add_test(test_ssd_mxnet_compile python3 ${ENGINE_TVM_HOME}/ssd_mxnet/compile_ssd.py ${TMP_DIR})
-add_test(test_ssd_mxnet_deploy_py python3 ${ENGINE_TVM_HOME}/ssd_mxnet/deploy_ssd.py ${TMP_DIR} ${RES_DIR}/street_small.jpg)
-add_test(test_ssd_mxnet_deploy_cpp test_tvm_ssd_mxnet ${TMP_DIR} ${RES_DIR}/street_small.jpg)
+add_test(test_ssd_mxnet_compile python3 ${ENGINE_TVM_HOME}/ssd_mxnet/compile_ssd.py cpu ${TMP_DIR})
+add_test(test_ssd_mxnet_deploy_py python3 ${ENGINE_TVM_HOME}/ssd_mxnet/deploy_ssd.py cpu ${TMP_DIR} ${RES_DIR}/street_small.jpg)
+add_test(test_ssd_mxnet_deploy_cpp test_tvm_ssd_mxnet cpu ${TMP_DIR} ${RES_DIR}/street_small.jpg)
