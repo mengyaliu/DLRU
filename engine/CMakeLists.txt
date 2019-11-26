@@ -4,13 +4,13 @@ include_directories("${CMAKE_SOURCE_DIR}/utils")
 include_directories("${CMAKE_INSTALL_PREFIX}/include")
 link_directories("${CMAKE_INSTALL_PREFIX}/lib")
 
-# set(OPENCV_LIBS opencv_core opencv_highgui opencv_imgproc)
-set(OPENCV_LIBS opencv_core opencv_imgcodecs opencv_highgui opencv_imgproc)
+find_package(PkgConfig REQUIRED)
+pkg_search_module(OPENCV REQUIRED opencv)
 
 set(SRC tvm/ssd_mxnet/TvmSsdMxnet.cpp)
 
 add_library(dlru SHARED ${SRC})
-target_link_libraries(dlru dlru_utils ${OPENCV_LIBS})
+target_link_libraries(dlru dlru_utils ${OPENCV_LIBRARIES})
 
 add_executable(test_tvm_ssd_mxnet tvm/ssd_mxnet/test.cpp)
 target_link_libraries(test_tvm_ssd_mxnet dlru)

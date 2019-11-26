@@ -2,7 +2,6 @@
 
 import tvm
 import sys
-from tvm.relay.testing.config import ctx_list
 from tvm.contrib import graph_runtime
 from gluoncv import data
 from utils.timerecorder import TimeRecoder

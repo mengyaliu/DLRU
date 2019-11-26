@@ -1,4 +1,6 @@
 .bash_history
+.local/
+.tvm_test_data/
 .nv/
 .cache/
 .tmp/
