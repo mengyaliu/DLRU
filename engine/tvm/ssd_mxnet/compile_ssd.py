@@ -22,10 +22,8 @@ dshape = (1, 3, 512, 512)
 
 if sys.argv[1] == 'cpu':
     target = 'llvm'
-    ctx = tvm.cpu(0)
 else:
     target = 'cuda'
-    ctx = tvm.gpu(0)
 
 # download model
 block = model_zoo.get_model(model_name, pretrained=True)

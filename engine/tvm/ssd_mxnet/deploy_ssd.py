@@ -14,11 +14,8 @@ class SSD():
         loaded_params = bytearray(open(model_dir + "deploy_param.params", "rb").read())
 
         # Init target mode
-        if mode == 'cpu':
-            self.target = 'llvm'
-            self.ctx = tvm.cpu(0)
-        else:
-            self.target = 'cuda'
+        self.ctx = tvm.cpu(0)
+        if mode == 'gpu':
             self.ctx = tvm.gpu(0)
 
         self.runtime = graph_runtime.create(loaded_json, loaded_lib, self.ctx)
