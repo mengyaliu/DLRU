@@ -7,19 +7,19 @@ from gluoncv import data
 from utils.timerecorder import TimeRecoder
 
 class SSD():
-    def __init__(self, mode, model_dir):
+    def __init__(self, mode, lib_path, graph_path, param_path):
         # Load compiled lib and params from file
-        loaded_json = open(model_dir + "deploy_graph.json").read()
-        loaded_lib = tvm.module.load(model_dir + "deploy_lib.tar")
-        loaded_params = bytearray(open(model_dir + "deploy_param.params", "rb").read())
+        graph = open(graph_path).read()
+        lib = tvm.module.load(lib_path)
+        params = bytearray(open(param_path, "rb").read())
 
         # Init target mode
         self.ctx = tvm.cpu(0)
         if mode == 'gpu':
             self.ctx = tvm.gpu(0)
 
-        self.runtime = graph_runtime.create(loaded_json, loaded_lib, self.ctx)
-        self.runtime.load_params(loaded_params)
+        self.runtime = graph_runtime.create(graph, lib, self.ctx)
+        self.runtime.load_params(params)
 
         # init Timer
         self.timer = TimeRecoder()
@@ -51,6 +51,14 @@ class SSD():
         return results
 
 if __name__ == '__main__':
-    ssd = SSD(sys.argv[1], sys.argv[2])
-    results = ssd.run(sys.argv[3])
+    mode = sys.argv[1]
+    model_dir = sys.argv[2]
+    image_path = sys.argv[3]
+
+    lib_path = model_dir + "deploy_lib.tar"
+    graph_path = model_dir + "deploy_graph.json"
+    param_path = model_dir + "deploy_param.params"
+
+    ssd = SSD(mode, lib_path, graph_path, param_path)
+    results = ssd.run(image_path)
     print(results)

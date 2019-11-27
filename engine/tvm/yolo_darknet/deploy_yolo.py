@@ -8,7 +8,7 @@ import tvm.relay.testing.yolo_detection
 import tvm.relay.testing.darknet
 
 class YOLO():
-    def __init__(self, mode, type, model_dir):
+    def __init__(self, mode, type, lib_path, graph_path, param_path, data_path):
         self.MODEL_NAME = type
         self.neth = 416
         self.netw = 416
@@ -18,13 +18,14 @@ class YOLO():
         if mode == 'gpu':
             self.ctx = tvm.gpu(0)
 
-        graph = open(model_dir + "deploy_graph.json").read()
-        lib = tvm.module.load(model_dir + "deploy_lib.tar")
-        params = bytearray(open(model_dir + "deploy_param.params", "rb").read())
+        lib = tvm.module.load(lib_path)
+        graph = open(graph_path).read()
+        params = bytearray(open(param_path, "rb").read())
+
         self.runtime = graph_runtime.create(graph, lib, self.ctx)
         self.runtime.load_params(params)
-        self.names = np.load(model_dir + 'names.npy',allow_pickle='TRUE').item()['names']
-        self.classes = np.load(model_dir + 'classes.npy',allow_pickle='TRUE').item()['classes']
+        self.names = np.load(data_path, allow_pickle='TRUE').item()['names']
+        self.classes = np.load(data_path, allow_pickle='TRUE').item()['classes']
 
     def run(self, im_fname):
         data = tvm.relay.testing.darknet.load_image(im_fname, self.netw, self.neth)
@@ -98,13 +99,23 @@ class YOLO():
                 top = int((b.y-b.h/2.)*imh)
                 bot = int((b.y+b.h/2.)*imh)
                 result = {"class": name,
-                          "score": prob,
+                          "score": str(prob),
                           "bbox": [left, right, top, bot]}
                 results[str(num)] = result;
                 num = num + 1
         return results
 
 if __name__ == '__main__':
-    yolo = YOLO(sys.argv[1], sys.argv[2], sys.argv[3])
-    results = yolo.run(sys.argv[4])
+    mode = sys.argv[1]
+    type = sys.argv[2]
+    model_dir = sys.argv[3]
+    image_path = sys.argv[4]
+
+    lib_path = model_dir + "deploy_lib.tar"
+    graph_path = model_dir + "deploy_graph.json"
+    param_path = model_dir + "deploy_param.params"
+    data_path = model_dir + "data.npy"
+
+    yolo = YOLO(mode, type, lib_path, graph_path, param_path, data_path)
+    results = yolo.run(image_path)
     print(results)

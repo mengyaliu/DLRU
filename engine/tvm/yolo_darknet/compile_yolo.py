@@ -71,7 +71,7 @@ with open(path_graph, "w") as fo:
 with open(path_params, "wb") as fo:
     fo.write(relay.save_param_dict(params))
 
-# download and save names
+# download and save names and net classes
 coco_name = 'coco.names'
 coco_url = REPO_URL + 'data/' + coco_name + '?raw=true'
 coco_path = download_testdata(coco_url, coco_name, module='data')
@@ -79,10 +79,8 @@ coco_path = download_testdata(coco_url, coco_name, module='data')
 with open(coco_path) as f:
     content = f.readlines()
 
-names = {'names': [x.strip() for x in content]}
-np.save(tmp_dir + 'names.npy', names)
-
-# save classes
 last_layer = net.layers[net.n - 1]
-classes = {'classes': last_layer.classes}
-np.save(tmp_dir + 'classes.npy', classes)
+
+data = {'names': [x.strip() for x in content], 'classes': last_layer.classes}
+np.save(tmp_dir + 'data.npy', data)
+

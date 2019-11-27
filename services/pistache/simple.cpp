@@ -25,9 +25,9 @@ public:
     httpEndpoint->init(opts);
     setupRoutes();
 
-    string lib = model_dir + "deploy_lib.tar.so";
-    string graph = model_dir + "deploy_graph.json";
-    string params = model_dir + "deploy_param.params";
+    string lib = model_dir + "/ssd/deploy_lib.tar.so";
+    string graph = model_dir + "/ssd/deploy_graph.json";
+    string params = model_dir + "/ssd/deploy_param.params";
 
     // init tvm runtime
     runtime_.Init(mode, lib, graph, params);

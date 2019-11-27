@@ -71,11 +71,6 @@ $ ./scripts/build.sh test
 
 ### Try pistache c++ restful service example, cpu mode
 
-* Compile mxnet ssd model
-```
-$ python3 ./install/ssd_mxnet/compile_ssd.py cpu .model/
-```
-
 * Start pistache service
 ```
 ./install/bin/simple_pistache cpu .model/
@@ -91,12 +86,55 @@ then following outputs means the service in container is correct.
 {"0":{"score":0.999661922454834,"class":1.0,"bbox":[302.7614440917969,267.5565185546875,479.8902282714844,395.59326171875]},"1":{"score":0.9974727034568787,"class":6.0,"bbox":[252.70074462890626,224.68527221679688,380.7926025390625,296.6217346191406]},"2":{"score":0.9877620935440064,"class":14.0,"bbox":[355.84759521484377,180.6073455810547,443.7603759765625,384.37005615234377]},"3":{"score":0.9850497841835022,"class":14.0,"bbox":[178.17184448242188,206.58700561523438,259.6250915527344,330.6838684082031]},"4":{"score":0.9553403854370117,"class":14.0,"bbox":[23.591705322265626,218.72982788085938,103.66038513183594,361.9799499511719]}}
 ```
 
-### Try flask python restful service example, gpu mode
+### Try flask python restful service example, cpu mode
 
-* Compile mxnet ssd model
+* Start service
 ```
-$ python3 ./install/ssd_mxnet/compile_ssd.py gpu .model/
+python3 ./install/flask/simple.py cpu .model/
 ```
+
+* open another terminal, and test above api
+```
+curl -X POST -F "file=@res/dog.jpg" http://localhost:5000/api/v1/object/yolo/jpg
+```
+
+then following outputs means the service in container is correct.
+```
+{
+    "2": {
+        "bbox": [
+            164,
+            562,
+            112,
+            444
+        ],
+        "class": "bicycle",
+        "score": "0.99416536"
+    },
+    "0": {
+        "bbox": [
+            128,
+            314,
+            224,
+            536
+        ],
+        "class": "dog",
+        "score": "0.98993456"
+    },
+    "1": {
+        "bbox": [
+            473,
+            688,
+            85,
+            170
+        ],
+        "class": "truck",
+        "score": "0.92719495"
+    }
+}
+```
+
+### Try flask python restful service example, gpu mode
 
 * Start service
 ```
