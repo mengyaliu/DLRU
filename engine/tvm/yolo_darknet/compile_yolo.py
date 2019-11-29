@@ -46,16 +46,13 @@ mod, params = relay.frontend.from_darknet(net, dtype=dtype, shape=data.shape)
 
 if sys.argv[1] == 'cpu':
     target = 'llvm'
-    target_host = 'llvm'
 else:
     target = 'cuda'
-    target_host = 'cuda'
 
 print("Compiling the model...")
 with relay.build_config(opt_level=3):
     graph, lib, params = relay.build(mod,
                                      target=target,
-                                     target_host=target_host,
                                      params=params)
 
 # save model to files

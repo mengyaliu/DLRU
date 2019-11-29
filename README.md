@@ -47,7 +47,7 @@ $ ./docker/run.sh dlru/cpu
 ```
 $ source ./scripts/env.sh
 $ ./scripts/build.sh
-$ ./scripts/build.sh test
+$ ./scripts/build.sh test cpu
 ```
 
 ### Build for GPU mode
@@ -66,14 +66,14 @@ $ ./docker/run.sh dlru/gpu
 ```
 $ source ./scripts/env.sh
 $ ./scripts/build.sh gpu
-$ ./scripts/build.sh test
+$ ./scripts/build.sh test gpu
 ```
 
 ### Try pistache c++ restful service example, cpu mode
 
 * Start pistache service
 ```
-./install/bin/simple_pistache cpu .model/
+./install/bin/simple_pistache cpu .model/cpu/
 ```
 
 * open another terminal, and test above api
@@ -90,7 +90,7 @@ then following outputs means the service in container is correct.
 
 * Start service
 ```
-python3 ./install/flask/simple.py cpu .model/
+python3 ./install/flask/simple.py cpu .model/cpu/
 ```
 
 * open another terminal, and test above api
@@ -138,7 +138,7 @@ then following outputs means the service in container is correct.
 
 * Start service
 ```
-python3 ./install/flask/simple.py gpu .model/
+python3 ./install/flask/simple.py gpu .model/gpu/
 ```
 
 * open another terminal, and test above api
