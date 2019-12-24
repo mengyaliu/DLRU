@@ -63,9 +63,9 @@ function test_dlru()
 {
     pushd $DLRU_HOME/build
     if [ "$1" != "" ]; then
-        ctest -V --timeout 100 -R $1
+        ctest -V --timeout 10000 -R $1
     else
-        ctest -V --timeout 100
+        ctest -V --timeout 10000
     fi
     popd
 }
